@@ -1,11 +1,17 @@
 import React from 'react';
 
-export default ()=> {
+export default (props)=> {
   return (
     <div>
-      <button>Play</button>
-      <button>Pause</button>
-      <button>Clear</button>
+      <button
+        onClick={()=> props.handleClick("active")}
+      >Play</button>
+      <button
+        onClick={()=> props.handleClick("paused")}
+      >Pause</button>
+      <button
+        onClick={()=> props.handleClick("clear")}
+      >Clear</button>
     </div>
   );
 }

@@ -12,12 +12,11 @@ export default class Grid extends Component {
   updateCanvas() {
 
     const ctx = this.refs.canvas.getContext('2d');
-      this.grid.map((row, x)=> {
-        row.map((cell, y)=> {
+      this.grid.forEach((row, x)=> {
+        row.forEach((cell, y)=> {
           if(cell === 1) {
             ctx.fillStyle = "rgb(200,0,0)";
-            console.log(x,y);
-            ctx.fillRect(x *40, y*40, 40, 40);
+            ctx.fillRect(x*8, y*8, 8, 8);
           }
         });
       });
