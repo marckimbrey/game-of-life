@@ -14,10 +14,18 @@ class App extends Component {
 
     };
     this.handleClick = this.handleClick.bind(this);
+    this.nextGeneration = this.nextGeneration.bind(this);
   }
   handleClick(gameState) {
     this.setState({gameState: gameState});
 
+  }
+  componentDidMount() {
+    setInterval(()=> {
+      if (this.state.gameState === 'active') {
+        this.nextGeneration(this.state.grid);
+      }
+    }, 500);
   }
   generateRandomGrid(gridSize) {
     const randomGrid = [];
@@ -148,12 +156,13 @@ class App extends Component {
 
     this.setState({grid: nextGen});
   }
-  
   render() {
     return (
       <div className="App">
         <ControlButtons handleClick={this.handleClick} />
-        <Grid grid={this.state.grid} />
+        <Grid
+          grid={this.state.grid}
+        />
 
       </div>
     );
