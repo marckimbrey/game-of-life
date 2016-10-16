@@ -17,8 +17,19 @@ class App extends Component {
     this.nextGeneration = this.nextGeneration.bind(this);
   }
   handleClick(gameState) {
-    this.setState({gameState: gameState});
-
+    if (gameState === 'clear') {
+       const emptyGrid = this.state.grid.map((row)=> {
+         return  row.map((cell)=> {
+           return 0;
+         });
+       });
+       this.setState({
+         grid: emptyGrid,
+         gameState: 'paused'
+       });
+    } else {
+      this.setState({gameState: gameState});
+    }
   }
   componentDidMount() {
     setInterval(()=> {
