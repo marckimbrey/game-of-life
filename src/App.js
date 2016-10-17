@@ -15,6 +15,7 @@ class App extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.nextGeneration = this.nextGeneration.bind(this);
+    this.onCellClick = this.onCellClick.bind(this);
   }
   handleClick(gameState) {
     if (gameState === 'clear') {
@@ -31,12 +32,17 @@ class App extends Component {
       this.setState({gameState: gameState});
     }
   }
+  onCellClick(x, y) {
+    let grid = this.state.grid;
+    grid[x][y] === 1? grid[x][y] = 0 : grid[x][y] = 1;
+    this.setState({grid: grid});
+  }
   componentDidMount() {
     setInterval(()=> {
       if (this.state.gameState === 'active') {
         this.nextGeneration(this.state.grid);
       }
-    }, 500);
+    }, 300);
   }
   generateRandomGrid(gridSize) {
     const randomGrid = [];
@@ -170,9 +176,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <ControlButtons handleClick={this.handleClick} />
+        <ControlButtons
+          handleClick={this.handleClick}/>
         <Grid
           grid={this.state.grid}
+          onCellClick={this.onCellClick}
         />
 
       </div>
