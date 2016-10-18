@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import GenerationCounter from './GenerationCounter';
 import ControlButtons from './ControlButtons';
 import Grid from './Grid';
 
@@ -11,6 +12,7 @@ class App extends Component {
     this.state ={
       grid: grid,
       gameState: "active",
+      generation: 0
 
     };
     this.handleClick = this.handleClick.bind(this);
@@ -26,7 +28,8 @@ class App extends Component {
        });
        this.setState({
          grid: emptyGrid,
-         gameState: 'paused'
+         gameState: 'paused',
+         generation: 0
        });
     } else {
       this.setState({gameState: gameState});
@@ -40,7 +43,7 @@ class App extends Component {
   componentDidMount() {
     setInterval(()=> {
       if (this.state.gameState === 'active') {
-        this.nextGeneration(this.state.grid);
+        this.nextGeneration(this.state.grid, this.state.generation);
       }
     }, 300);
   }
@@ -59,7 +62,7 @@ class App extends Component {
     }
     return randomGrid;
   }
-  nextGeneration(currGen) {
+  nextGeneration(currGen, gen) {
 
     const nextGen = currGen.map((row, x)=> {
       return row.map((cell, y)=> {
@@ -170,12 +173,16 @@ class App extends Component {
         return 0;
       });
     });
-
-    this.setState({grid: nextGen});
+    gen++
+    this.setState({
+      grid: nextGen,
+      generation: gen
+    });
   }
   render() {
     return (
       <div className="App">
+        <GenerationCounter generation={this.state.generation} />
         <ControlButtons
           handleClick={this.handleClick}/>
         <Grid
