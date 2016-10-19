@@ -37,7 +37,7 @@ class App extends Component {
   }
   onCellClick(x, y) {
     let grid = this.state.grid;
-    grid[x][y] === 1? grid[x][y] = 0 : grid[x][y] = 1;
+    grid[x][y] = grid[x][y] === 1?  0 :  1;
     this.setState({grid: grid});
   }
   componentDidMount() {
@@ -63,107 +63,24 @@ class App extends Component {
     return randomGrid;
   }
   nextGeneration(currGen, gen) {
+    const searchNeighbors = [[-1,-1], [-1, 0], [-1, 1],
+                   [0, -1],          [0, 1],
+                   [1, -1], [1, 0],  [1, 1]];
 
     const nextGen = currGen.map((row, x)=> {
       return row.map((cell, y)=> {
         let neighbours = 0;
-        if (x === 0) { // top row
-          if (y === 0) { // top left
-            const right = currGen[x][y+1];
-            const bottomMiddle = currGen[x+1][y];
-            const bottomRight = currGen[x+1][y+1];
-            neighbours += right;
-            neighbours += bottomMiddle;
-            neighbours += bottomRight;
+       searchNeighbors.forEach((pos) => {
+           const r = x + pos[0];
+           const c = y + pos[1];
 
-          } else if (y === row.length-1) { // top right
-            const left = currGen[x][y-1];
-            const bottomLeft = currGen[x+1][y-1];
-            const bottomMiddle = currGen[x+1][y];
-            neighbours += left;
-            neighbours += bottomMiddle;
-            neighbours += bottomLeft;
-
-          } else {
-            const left = currGen[x][y-1];
-            const right = currGen[x][y+1];
-            const bottomLeft = currGen[x+1][y-1];
-            const bottomMiddle = currGen[x+1][y];
-            const bottomRight = currGen[x+1][y+1];
-            neighbours += left;
-            neighbours += right;
-            neighbours += bottomLeft;
-            neighbours += bottomMiddle;
-            neighbours += bottomRight;
-          }
-        } else if (x === row.length -1) { // bottom row
-          if (y === 0) { // bottom left
-            const right = currGen[x][y+1];
-            const topMiddle = currGen[x-1][y];
-            const topRight = currGen[x-1][y+1];
-            neighbours += right;
-            neighbours += topMiddle;
-            neighbours += topRight;
-          } else if (y === row.length-1) { // bottom right
-            const left = currGen[x][y-1];
-            const topLeft = currGen[x-1][y-1];
-            const topMiddle = currGen[x-1][y];
-            neighbours += left;
-            neighbours += topMiddle;
-            neighbours += topLeft;
-          } else {
-            const left = currGen[x][y-1];
-            const right = currGen[x][y+1];
-            const topLeft = currGen[x-1][y-1];
-            const topMiddle = currGen[x-1][y];
-            const topRight = currGen[x-1][y+1];
-            neighbours += left;
-            neighbours += right;
-            neighbours += topLeft;
-            neighbours += topMiddle;
-            neighbours += topRight;
-          }
-        } else if (y === 0) { // left column
-          const right = currGen[x][y+1];
-          const topMiddle = currGen[x-1][y];
-          const topRight = currGen[x-1][y+1];
-          const bottomMiddle = currGen[x+1][y];
-          const bottomRight = currGen[x+1][y+1];
-          neighbours += right;
-          neighbours += topMiddle;
-          neighbours += topRight;
-          neighbours += bottomMiddle;
-          neighbours += bottomRight;
-        } else if (y === row.length -1) { // right column
-          const left = currGen[x][y-1];
-          const topMiddle = currGen[x-1][y];
-          const topLeft = currGen[x-1][y-1];
-          const bottomMiddle = currGen[x+1][y];
-          const bottomLeft = currGen[x+1][y-1];
-          neighbours += left;
-          neighbours += topMiddle;
-          neighbours += topLeft;
-          neighbours += bottomMiddle;
-          neighbours += bottomLeft;
-        } else { // not edge cell
-          const topLeft = currGen[x-1][y-1];
-          const topMiddle = currGen[x-1][y];
-          const topRight = currGen[x-1][y+1];
-          const left = currGen[x][y-1];
-          const right = currGen[x][y+1];
-          const bottomLeft = currGen[x+1][y-1];
-          const bottomMiddle = currGen[x+1][y];
-          const bottomRight = currGen[x+1][y+1];
-          neighbours += topLeft;
-          neighbours += topMiddle;
-          neighbours += topRight;
-          neighbours += left;
-          neighbours += right;
-          neighbours += bottomRight;
-          neighbours += bottomMiddle;
-          neighbours += bottomLeft;
-
-        }
+           // If the cell is "out of bounds" ignore
+           if (r < 0 || c < 0 || r >= currGen.length || c >= currGen.length) {
+               return;
+           } else if (currGen[r][c]) {
+               neighbours++;
+           }
+       });
 
         if (cell === 1 && neighbours === 2) {
           return 1;
