@@ -12,6 +12,9 @@ export default (props)=> {
       <button
         onClick={()=> props.handleClick("clear")}
       >Clear</button>
+      <button
+        onClick={()=> props.handleClick("random")}
+      >Random</button>
     </div>
   );
 }

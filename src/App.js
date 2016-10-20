@@ -18,21 +18,31 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.nextGeneration = this.nextGeneration.bind(this);
     this.onCellClick = this.onCellClick.bind(this);
+    this.generateRandomGrid = this.generateRandomGrid.bind(this);
   }
   handleClick(gameState) {
-    if (gameState === 'clear') {
-       const emptyGrid = this.state.grid.map((row)=> {
-         return  row.map((cell)=> {
-           return 0;
-         });
-       });
-       this.setState({
-         grid: emptyGrid,
-         gameState: 'paused',
-         generation: 0
-       });
-    } else {
-      this.setState({gameState: gameState});
+    switch(gameState) {
+      case 'clear':
+        const emptyGrid = this.state.grid.map((row)=> {
+          return  row.map((cell)=> {
+            return 0;
+          });
+        });
+        this.setState({
+          grid: emptyGrid,
+          gameState: 'paused',
+          generation: 0
+        });
+        break;
+      case 'random':
+        this.setState({
+          grid: this.generateRandomGrid(50),
+          generation: 0
+        });
+        break;
+      default:
+        this.setState({gameState: gameState});
+        break;
     }
   }
   onCellClick(x, y) {
