@@ -1,9 +1,10 @@
 import React from 'react';
 
 export default (props)=> {
-    console.log(props);
   return (
 
-    <div>{props.generation}</div>
+    <div
+      className="counter"
+    >{props.generation}</div>
   );
 }

@@ -11,5 +11,5 @@ export default (props) => {
                 />;
     });
 
-    return(<table><tbody>{grid}</tbody></table>);
+    return(<table style={{height: window.innerWidth > 939? 940 * 0.6: window.innerWidth }}><tbody>{grid}</tbody></table>);
 }
