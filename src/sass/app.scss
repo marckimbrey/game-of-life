@@ -1,3 +1,12 @@
+@mixin background-gradient($start, $finish) {
+  background: $start;
+  background-image: -webkit-linear-gradient(top, $start, $finish);
+  background-image: -moz-linear-gradient(top, $start, $finish);
+  background-image: -ms-linear-gradient(top, $start, $finish);
+  background-image: -o-linear-gradient(top, $start, $finish);
+  background-image: linear-gradient(to bottom, $start, $finish);
+}
+
 .App {
   text-align: center;
   max-width: 940px;
@@ -5,8 +14,14 @@
   padding-bottom: 50px;
   overflow: auto;
 }
+h1 {
+  font-size: 3em;
+  text-shadow: 4px 4px 2px #bbb;
+
+}
 .counter {
   font-size: 3em;
+  text-shadow: 4px 4px 2px #bbb;
 }
 .control-btns {
   display: flex;
@@ -14,29 +29,20 @@
 }
 .btn {
   flex: 1;
-  background: #b0a699;
-  background-image: -webkit-linear-gradient(top, #b0a699, #807d79);
-  background-image: -moz-linear-gradient(top, #b0a699, #807d79);
-  background-image: -ms-linear-gradient(top, #b0a699, #807d79);
-  background-image: -o-linear-gradient(top, #b0a699, #807d79);
-  background-image: linear-gradient(to bottom, #b0a699, #807d79);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
+    @include background-gradient(#bd3333, #a83319);
   border-radius: 28px;
   color: #ffffff;
   font-size: 1em;
+  font-weight: bold;
   padding: 6px 0;
   text-decoration: none;
 
 }
 
 .btn:hover {
-  background: #fc3c3c;
-  background-image: -webkit-linear-gradient(top, #fc3c3c, #f50c0c);
-  background-image: -moz-linear-gradient(top, #fc3c3c, #f50c0c);
-  background-image: -ms-linear-gradient(top, #fc3c3c, #f50c0c);
-  background-image: -o-linear-gradient(top, #fc3c3c, #f50c0c);
-  background-image: linear-gradient(to bottom, #fc3c3c, #f50c0c);
+  flex: 1.1;
+
+  @include background-gradient(#fc3c3c, #f50c0c);
   text-decoration: none;
 }
 
@@ -52,7 +58,4 @@ p {
   font-size: 1.2em;
   margin-top: 30px;
   text-align: left;
-}
-a {
-
 }

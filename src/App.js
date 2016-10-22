@@ -110,7 +110,7 @@ class App extends Component {
     return (
 
       <div className="App">
-        <h1>Game ofLife</h1>
+        <h1>Game of Life</h1>
         <GenerationCounter
           generation={this.state.generation}
         />
